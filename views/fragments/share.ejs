@@ -1,0 +1,59 @@
+<div class="container">
+    <a class='facebook-share-button share' href="https://www.facebook.com/sharer/sharer.php?u=hangman.thomaspsl.fr&quote=Le mot était : <%= word %> - Mon score : <%= score %>" target='_blank'>Partager sur Facebook</a>
+                
+    <a class='twitter-share-button share' href="https://twitter.com/intent/tweet?text=Le mot était : <%= word %> - Mon score : <%= score %>&url=hangman.thomaspsl.fr" target='_blank'>Partager sur X</a>
+    
+    <a class='mail-share-button share' href="mailto:?subject=Jouer au jeu du Hangman : hangman.thomaspsl.fr&body=Le mot était : <%= word %> - Mon score : <%= score %>" target='_blank'>Partager par Mail</a>
+    
+    <a class='pinterest-share-button share' href="https://pinterest.com/pin/create/button/?url=hangman.thomaspsl.fr&description=Le mot était : <%= word %> - Mon score : <%= score %>" target='_blank'>Partager sur Pinterest</a>            
+</div>
+
+<style>
+    .share {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        color: white;
+        text-decoration: none;
+        border-radius: 20px;
+        margin-left: 1rem;
+        font-size: 0.9rem;
+        transition: background-color 0.2s;
+    }
+
+    .share:hover {
+        text-decoration: none;
+        color: white;
+    }
+
+    .twitter-share-button {
+        background: #1DA1F2;
+    }
+
+    .twitter-share-button:hover {
+        background: #0c85d0;
+    }
+
+    .facebook-share-button {
+        background: #0765ff;
+    }
+
+    .facebook-share-button:hover {
+        background: #0658dc;
+    }
+
+    .mail-share-button {
+        background: #ce3e31;
+    }
+
+    .mail-share-button:hover {
+        background: #b32d20;
+    }
+
+    .pinterest-share-button {
+        background: #e60022;
+    }
+
+    .pinterest-share-button:hover {
+        background: #9c261b;
+    }
+</style>

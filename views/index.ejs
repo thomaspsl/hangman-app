@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang='fr'>
+    <%- include('./fragments/head'); %>
+
+    <body class='container'>
+        <main>
+            <%- include('./fragments/logo'); %>
+
+            <p>Mot à deviner : <%= game.hide %></p>
+            <p>Essais restants : <%= game.tries %></p>
+            <p id="score">Score : <span><%= game.score %></span></p>
+            
+            <form action="/" method="POST">
+                <input type="text" name="letter" placeholder="Saisissez une lettre" maxlength="1" required>
+                <button type="submit">Essayer</button>
+            </form>
+
+            <% if (game.guesses.length !== 0) { %> <p>Vos essais : <%= game.guesses.join(', ') %></p> <% } %>
+        
+            <% if (error) { %> <p id="error"><%= error %></p> <% } %>
+        </main>
+
+        <script>
+            document.querySelector('input').focus();
+            let score = '<%= game.score %>';
+            let minus = '<%= minus %>';
+
+            const decrementScore = () => {
+                const scoreElement = document.getElementById("score").querySelector("span");
+                const intervalId = setInterval(() => {
+                    if (score > 0) {
+                        score -= minus;
+                        scoreElement.textContent = score;
+                    }
+                    if (score <= 0) {
+                        clearInterval(intervalId);
+                        window.location.href = '/end';
+                    }
+                }, 1000);
+            };
+            decrementScore();
+        </script>
+    </body>
+</html>

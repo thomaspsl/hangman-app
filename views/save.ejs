@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html lang='fr'>
+    <%- include('./fragments/head'); %>
+
+    <body class='container'>
+        <main>
+            <%- include('./fragments/logo'); %>
+    
+            <p>Enregistrer votre score :</p>
+            <form action="/save" method="POST">
+                <label for="pseudo">Entrez votre pseudo :</label>
+                <input type="text" id="pseudo" name="pseudo" required>
+                <button type="submit">Enregistrer</button>
+            </form>
+        </main>
+
+        <script>
+            document.querySelector('input').focus();
+        </script>
+    </body>
+</html>

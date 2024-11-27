@@ -1,0 +1,54 @@
+<p>Les 1000 meilleurs scores de la journée</p>
+<div class="table-container">
+    <table>
+        <tr>
+            <th>Pseudo</th>
+            <th>Score</th>
+            <th>Date</th>
+        <tr>
+        <tbody>
+            <% scores.forEach(score => { %>
+                <tr>
+                    <td><%= score.pseudo %></td>
+                    <td><%= score.score %></td>
+                    <td><%= (new Date(+score.date)).toLocaleTimeString('fr-FR') %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .table-container {
+        width: 100%;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    thead {
+        background-color: #f2f2f2;
+    }
+
+    tbody {
+        display: block;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+</style>
