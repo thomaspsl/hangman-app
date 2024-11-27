@@ -1,6 +1,9 @@
 const fs = require("fs");
 const csv = require("csv-parser");
 
+/**
+ * Configuration of the gameplay.
+ */
 const CONFIG = {
   MINUS: 1,
   TRIES: 5,
@@ -8,6 +11,9 @@ const CONFIG = {
   ERROR: 50,
 };
 
+/**
+ * Game Class.
+ */
 class Game {
   constructor(word) {
     this.hide = word.replace(/./g, "#");
@@ -57,6 +63,9 @@ class Game {
   }
 }
 
+/**
+ * Function to load all words.
+ */
 function setWords() {
   return new Promise((resolve, reject) => {
     const loadedWords = [];
@@ -68,9 +77,16 @@ function setWords() {
   });
 }
 
+/**
+ * Function to set the current word of the day.
+ */
 function setWord(words) {
-  const index = Math.floor(Math.random() * words.length);
-  return words[index].toUpperCase();
+  const today = new Date().toISOString().split("T")[0];
+  let hash = 0;
+  for (let i = 0; i < today.length; i++) {
+    hash = (hash * 31 + today.charCodeAt(i)) % words.length;
+  }
+  return words[hash].toUpperCase();
 }
 
 module.exports = { CONFIG, setWords, setWord, Game };
