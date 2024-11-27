@@ -37,7 +37,7 @@ From your command line:
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/thomaspsl-org/hangman-app
+$ git clone https://github.com/thomaspsl/hangman-app
 
 # Go into the repository
 $ cd hangman-app
