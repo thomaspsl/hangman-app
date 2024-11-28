@@ -11,7 +11,7 @@
                 <tr>
                     <td><%= score.pseudo %></td>
                     <td><%= score.score %></td>
-                    <td><%= (new Date(+score.date)).toLocaleTimeString('fr-FR') %></td>
+                    <td><%= (new Date(score.date)).toLocaleTimeString('fr-FR') %></td>
                 </tr>
             <% }); %>
         </tbody>

@@ -7,11 +7,11 @@ const db = require("./database/db");
 const { CONFIG, setWords, setWord, Game } = require("./game");
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3030;
 
-app.set("view engine", "ejs");
-app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.set("view engine", "ejs");
 
 app.use(
   session({
@@ -22,7 +22,7 @@ app.use(
   })
 );
 
-// ---------------------------------------------------
+// -------------------------------------------------
 
 let words = [];
 let word = "";
@@ -32,34 +32,58 @@ let word = "";
     words = await setWords();
     word = setWord(words);
 
-    // To reload all words if they have been changed
+    // Reload words daily
     cron.schedule("0 0 * * *", async () => {
       words = await setWords();
       word = setWord(words);
     });
 
     app.listen(PORT, () =>
-      console.log(`Serveur en écoute sur http://localhost:${PORT}`)
+      console.log(`Listening on http://localhost:${PORT}`)
     );
   } catch (error) {
-    console.error("Erreur lors du chargement initial : ", error);
+    console.error("Failed to load words / word and start the server:", error);
   }
 })();
 
-// ---------------------------------------------------
+// -------------------------------------------------
 
 /**
  * Default route for the gameplay.
  */
 app.get("/", async (req, res) => {
-  if (req.session.last === new Date().toLocaleDateString("fr-FR")) {
+  const today = new Date().toLocaleDateString("fr-FR");
+
+  // Reset session data if the date has changed
+  if (req.session.last && req.session.last !== today) {
+    delete req.session.game;
+    delete req.session.last;
+    delete req.session.saved;
+  }
+
+  const game = req.session.game
+    ? Object.assign(new Game(word), req.session.game)
+    : new Game(word);
+
+  if (!game.isFinish()) game.updateScore();
+
+  req.session.game = game;
+
+  if (game.isFinish()) {
+    if (game.isLoose()) game.score = 0;
+
+    if (!req.session.saved) return res.render("save");
+
+    const state = {
+      win: "Bravo, vous avez gagné ! 🎉 Revenez demain !",
+      loose: "Vous avez perdu ! 😢 Revenez demain !",
+    };
+
     const scores = await new Promise((resolve) =>
       db.all(
         "SELECT pseudo, score, date FROM scores WHERE date(date / 1000, 'unixepoch') = date('now') ORDER BY score DESC, date ASC LIMIT 1000",
         (err, rows) => {
-          if (err) {
-            console.error(err);
-          }
+          if (err) console.error(err);
           resolve(rows || []);
         }
       )
@@ -68,23 +92,12 @@ app.get("/", async (req, res) => {
     return res.render("end", {
       scores,
       word,
-      score: req.session.score,
-      message: req.session.message,
+      score: game.score,
+      message: game.isWin() ? state.win : state.loose,
     });
   }
 
-  const game = req.session.game
-    ? Object.assign(new Game(word), req.session.game)
-    : new Game(word);
-
-  game.setScore();
-
   const error = req.session.error || null;
-
-  req.session.game = game;
-
-  delete req.session.message;
-  delete req.session.score;
   delete req.session.error;
 
   res.render("index", {
@@ -97,22 +110,11 @@ app.get("/", async (req, res) => {
 /**
  * Principal logic for the gameplay.
  */
-app.post("/", (req, res) => {
-  if (!req.session.game) return res.redirect("/");
+app.post("/guess", (req, res) => {
+  if (!req.session.game) return res.redirect(400, "/");
 
   const game = Object.assign(new Game(word), req.session.game);
   const message = game.setGuess(req.body.letter, word);
-
-  if (game.isWin()) {
-    req.session.message = "Bravo, vous avez gagné ! 🎉 Revenez demain !";
-    return res.redirect("/save");
-  }
-
-  if (game.isLoose()) {
-    req.session.game.score = 0;
-    req.session.message = "Vous avez perdu ! 😢 Revenez demain !";
-    return res.redirect("/save");
-  }
 
   req.session.game = game;
   req.session.error = message;
@@ -121,19 +123,10 @@ app.post("/", (req, res) => {
 });
 
 /**
- * To display the pseudo's form.
- */
-app.get("/save", (req, res) => {
-  if (!req.session.game) return res.redirect("/");
-
-  res.render("save");
-});
-
-/**
- * To save the pseudo and the score in database.
+ * Save the pseudo and the score in the database.
  */
 app.post("/save", (req, res) => {
-  if (!req.session.game) return res.redirect("/");
+  if (!req.session.game) return res.redirect(400, "/");
 
   const pseudo = req.body.pseudo;
   const score = req.session.game.score;
@@ -144,21 +137,11 @@ app.post("/save", (req, res) => {
     [pseudo, score, date],
     (err) => {
       if (err) console.error(err);
-      req.session.score = score;
+
+      req.session.saved = true;
       req.session.last = new Date().toLocaleDateString("fr-FR");
-      delete req.session.game;
+
       res.redirect("/");
     }
   );
-});
-
-/**
- * Route calls from the client when the timer is down.
- */
-app.get("/end", (req, res) => {
-  if (!req.session.game) return res.redirect("/");
-
-  req.session.game.score = 0;
-  req.session.message = "Vous avez perdu ! 😢 Revenez demain !";
-  res.redirect("/save");
 });

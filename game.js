@@ -21,7 +21,6 @@ class Game {
     this.guesses = [];
     this.score = CONFIG.SCORE;
     this.time = Date.now();
-    this.nberror = 0;
   }
 
   isWin() {
@@ -32,9 +31,14 @@ class Game {
     return this.hide.includes("#") && (this.tries <= 0 || this.score <= 0);
   }
 
-  setScore() {
+  isFinish() {
+    return this.isWin() || this.isLoose();
+  }
+
+  updateScore() {
     const timePenalty = Math.floor((Date.now() - this.time) / 1000);
-    this.score = CONFIG.SCORE - timePenalty - this.nberror * CONFIG.ERROR;
+    this.score =
+      CONFIG.SCORE - timePenalty - this.guesses.length * CONFIG.ERROR;
   }
 
   setGuess(letter, word) {
@@ -52,8 +56,6 @@ class Game {
           .join("");
       } else {
         this.guesses.push(guess);
-        this.nberror += 1;
-
         this.tries = Math.max(0, this.tries - CONFIG.MINUS);
         this.score = Math.max(0, this.score - CONFIG.ERROR);
       }

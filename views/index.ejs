@@ -11,7 +11,7 @@
             <p>Essais restants : <%= game.tries %></p>
             <p id="score">Score : <span><%= game.score %></span></p>
             
-            <form action="/" method="POST">
+            <form action="/guess" method="POST">
                 <input type="text" name="letter" placeholder="Saisissez une lettre" maxlength="1" required>
                 <button type="submit">Essayer</button>
             </form>
@@ -33,10 +33,7 @@
                         score -= minus;
                         scoreElement.textContent = score;
                     }
-                    if (score <= 0) {
-                        clearInterval(intervalId);
-                        window.location.href = '/end';
-                    }
+                    if (score <= 0) window.location.reload()
                 }, 1000);
             };
             decrementScore();
