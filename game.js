@@ -83,10 +83,10 @@ function setWords() {
  * Function to set the current word of the day.
  */
 function setWord(words) {
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().getDate();
   let hash = 0;
-  for (let i = 0; i < today.length; i++) {
-    hash = (hash * 31 + today.charCodeAt(i)) % words.length;
+  for (let i = 0; i < today; i++) {
+    hash = (hash * 31 + today) % words.length;
   }
   return words[hash].toUpperCase();
 }
