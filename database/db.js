@@ -17,14 +17,14 @@ db.run(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       pseudo TEXT NOT NULL,
       score INTEGER NOT NULL,
-      date TEXT NOT NULL
+      date DATETIME NOT NULL
     )
   `,
   (err) => {
     if (err) {
       console.error("Erreur lors de la création de la table:", err.message);
     } else {
-      console.log('Table "players" vérifiée/créée.');
+      console.log('Table "scores" vérifiée/créée.');
     }
   }
 );

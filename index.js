@@ -81,7 +81,7 @@ app.get("/", async (req, res) => {
 
     const scores = await new Promise((resolve) =>
       db.all(
-        "SELECT pseudo, score, date FROM scores WHERE date(date / 1000, 'unixepoch') = date('now') ORDER BY score DESC, date ASC LIMIT 1000",
+        "SELECT pseudo, score, date FROM scores WHERE DATE(date) = CURRENT_DATE ORDER BY score DESC, date ASC LIMIT 1000",
         (err, rows) => {
           if (err) console.error(err);
           resolve(rows || []);
@@ -130,11 +130,14 @@ app.post("/save", (req, res) => {
 
   const pseudo = req.body.pseudo;
   const score = req.session.game.score;
-  const date = Date.now();
+  const date = new Date();
+  var isoDateTime = new Date(
+    date.getTime() - date.getTimezoneOffset() * 60000
+  ).toISOString();
 
   db.run(
     "INSERT INTO scores (pseudo, score, date) VALUES (?, ?, ?)",
-    [pseudo, score, date],
+    [pseudo, score, isoDateTime],
     (err) => {
       if (err) console.error(err);
 
