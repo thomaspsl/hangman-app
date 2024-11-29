@@ -4,6 +4,7 @@ const express = require("express");
 const session = require("express-session");
 const cron = require("node-cron");
 const db = require("./database/db");
+
 const { CONFIG, setWords, setWord, Game } = require("./game");
 
 const app = express();
@@ -130,14 +131,11 @@ app.post("/save", (req, res) => {
 
   const pseudo = req.body.pseudo;
   const score = req.session.game.score;
-  const date = new Date();
-  var isoDateTime = new Date(
-    date.getTime() - date.getTimezoneOffset() * 60000
-  ).toISOString();
+  const date = new Date().toISOString();
 
   db.run(
     "INSERT INTO scores (pseudo, score, date) VALUES (?, ?, ?)",
-    [pseudo, score, isoDateTime],
+    [pseudo, score, date],
     (err) => {
       if (err) console.error(err);
 
