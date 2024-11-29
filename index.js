@@ -82,7 +82,7 @@ app.get("/", async (req, res) => {
 
     const scores = await new Promise((resolve) =>
       db.all(
-        "SELECT pseudo, score, date FROM scores WHERE DATE(date) = CURRENT_DATE ORDER BY score DESC, date ASC LIMIT 1000",
+        "SELECT pseudo, score, date FROM scores WHERE DATE(date, '+1 hour') = DATE('now', '+1 hour') ORDER BY score DESC, date ASC LIMIT 1000",
         (err, rows) => {
           if (err) console.error(err);
           resolve(rows || []);
