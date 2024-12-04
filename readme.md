@@ -1,9 +1,10 @@
 <div align='center'>
   
-  [<img src='public/favicon.ico' alt='Hangman' height='150' style='margin: 20px'>](https://hangman.thomaspsl.fr)
-  
-  # Hangman Project
-  #### It's an web [application](https://hangman.thomaspsl.fr) to play hangman and create some tests, built with [NodeJS](https://nodejs.org).
+[<img src='public/favicon.ico' alt='Hangman' height='150' style='margin: 20px'>](https://hangman.thomaspsl.fr)
+
+# Hangman Project
+
+#### It's an web [application](https://hangman.thomaspsl.fr) to play hangman and create some tests, built with [NodeJS](https://nodejs.org).
 
 [![NodeJS](https://img.shields.io/badge/Node-16.2-58A149)](https://nodejs.org)
 [![Express](https://img.shields.io/badge/Express-4.1-010409)](https://fr.reactjs.org)
@@ -20,8 +21,8 @@
 
 <div>
     
-  ## 👨‍🎓 Contributors
-  ![Contributors](https://contrib.rocks/image?repo=thomaspsl-org/hangman-app)
+## 👨‍🎓 Contributors
+![Contributors](https://contrib.rocks/image?repo=thomaspsl/hangman-app)
 
 ## 📚 Description
 
@@ -80,6 +81,6 @@ MIT
 
 <div align='center'>  
   
-  Instagram [Incoming...]() • GitHub [@thomaspsl](https://github.com/thomaspsl) • Twitter [@thomaspssl](https://twitter.com/thomaspssl)
+Instagram [@thomaspssl](https://www.instagram.com/thomaspssl) • GitHub [@thomaspsl](https://github.com/thomaspsl) • Twitter [@thomaspssl](https://twitter.com/thomaspssl)
   
 </div>
