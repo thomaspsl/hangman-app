@@ -1,6 +1,6 @@
 <div align='center'>
   
-  [<img src='public/favicon.ico' alt='Adogtion' height='150' style='margin: 20px'>](https://hangman.thomaspsl.fr)
+  [<img src='public/favicon.ico' alt='Hangman' height='150' style='margin: 20px'>](https://hangman.thomaspsl.fr)
   
   # Hangman Project
   #### It's an [application](https://hangman.thomaspsl.fr) to play hangman and create some tests, built with [NodeJS](https://nodejs.org).
