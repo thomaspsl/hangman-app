@@ -22,7 +22,7 @@
 <div>
     
 ## 👨‍🎓 Contributors
-![Contributors](https://contrib.rocks/image?repo=thomaspsl/hangman-app)
+![Contributors](https://contrib.rocks/image?repo=thomaspsl/hangman-appp)
 
 ## 📚 Description
 
