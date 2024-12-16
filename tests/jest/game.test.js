@@ -1,4 +1,4 @@
-const { CONFIG, setWords, setWord, Game } = require("../game");
+const { CONFIG, setWords, setWord, Game } = require("../../game");
 
 describe("Game Module", () => {
   test("Start - SetWords should load words from file", async () => {
