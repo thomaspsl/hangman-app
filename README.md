@@ -43,10 +43,10 @@ $ git clone https://github.com/thomaspsl/hangman-app
 # Go into the repository
 $ cd hangman-app
 
-# Install dependencies
+# Install dependencies puis penser à créer votre .env à partir du .env.example
 $ npm install
 
-# Run the app
+# Run the app 
 $ npm start
 
 # Run tests
