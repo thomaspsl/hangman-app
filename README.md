@@ -22,7 +22,7 @@
 <div>
     
 ## 👨‍🎓 Contributors
-![Contributors](https://contrib.rocks/image?repo=thomaspsl/looter-app)
+![Contributors](https://contrib.rocks/image?coucou=lol&repo=thomaspsl/hangman-app)
 
 ## 📚 Description
 
