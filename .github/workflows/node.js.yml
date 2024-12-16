@@ -3,9 +3,9 @@ concurrency: production
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop, release ]
   pull_request:
-    branches: [ main ]
+    branches: [ develop, release ]
 
 jobs:
   build:
